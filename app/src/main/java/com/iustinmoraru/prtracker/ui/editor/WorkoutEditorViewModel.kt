@@ -16,6 +16,7 @@ import com.iustinmoraru.prtracker.data.workout.WorkoutStatus
 import com.iustinmoraru.prtracker.domain.stats.WorkoutStats
 import com.iustinmoraru.prtracker.domain.validation.WorkoutError
 import com.iustinmoraru.prtracker.domain.validation.WorkoutValidator
+import com.iustinmoraru.prtracker.notifications.RecordNotifier
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -50,6 +51,7 @@ data class EditorUiState(
  */
 class WorkoutEditorViewModel(
     private val repository: WorkoutRepository,
+    private val notifier: RecordNotifier,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
@@ -135,6 +137,7 @@ class WorkoutEditorViewModel(
             repository.save(workout)
                 .onSuccess { (_, result) ->
                     val records = if (workout.isCompleted) WorkoutStats.newRecords(history, workout) else emptyList()
+                    notifier.notifyNewRecords(records)
                     _uiState.update { it.copy(isSaving = false, hasChanges = false, saved = SavedEvent(result, records)) }
                 }
                 .onFailure { _uiState.update { it.copy(isSaving = false, saveFailed = true) } }
@@ -145,7 +148,7 @@ class WorkoutEditorViewModel(
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
                 val app = this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY] as PrTrackerApp
-                WorkoutEditorViewModel(app.container.workoutRepository, createSavedStateHandle())
+                WorkoutEditorViewModel(app.container.workoutRepository, app.container.notifier, createSavedStateHandle())
             }
         }
     }

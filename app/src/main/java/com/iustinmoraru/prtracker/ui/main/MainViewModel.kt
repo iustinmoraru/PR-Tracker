@@ -14,6 +14,7 @@ import com.iustinmoraru.prtracker.data.workout.WorkoutRepository
 import com.iustinmoraru.prtracker.data.workout.WorkoutStatus
 import com.iustinmoraru.prtracker.domain.stats.PersonalRecord
 import com.iustinmoraru.prtracker.domain.stats.WorkoutStats
+import com.iustinmoraru.prtracker.notifications.RecordNotifier
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -61,6 +62,7 @@ data class MainUiState(
 class MainViewModel(
     private val authRepository: AuthRepository,
     private val workoutRepository: WorkoutRepository,
+    private val notifier: RecordNotifier,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(MainUiState(user = authRepository.currentUser))
@@ -110,6 +112,7 @@ class MainViewModel(
         viewModelScope.launch {
             workoutRepository.setStatus(workout.id, if (completing) WorkoutStatus.COMPLETED else WorkoutStatus.PLANNED)
                 .onSuccess {
+                    notifier.notifyNewRecords(newRecords)
                     val message = if (newRecords.isNotEmpty()) MainMessage.NewRecords(newRecords) else MainMessage.StatusChanged(completing)
                     _uiState.update { it.copy(message = message) }
                 }
@@ -136,7 +139,7 @@ class MainViewModel(
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
                 val app = this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY] as PrTrackerApp
-                MainViewModel(app.container.authRepository, app.container.workoutRepository)
+                MainViewModel(app.container.authRepository, app.container.workoutRepository, app.container.notifier)
             }
         }
     }

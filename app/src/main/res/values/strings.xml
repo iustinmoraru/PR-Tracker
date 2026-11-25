@@ -132,6 +132,33 @@
     <string name="profile_notifications">Notificări și remindere</string>
     <string name="profile_about">Despre aplicație</string>
 
+    <!-- Deadhang timer -->
+    <string name="timer_eyebrow">Activitate specială</string>
+    <string name="timer_title">Deadhang timer</string>
+    <string name="timer_description">Ține bara, respiră controlat și construiește o priză mai puternică.</string>
+    <string name="timer_status_ready">Pregătit</string>
+    <string name="timer_status_hold">Ține!</string>
+    <string name="timer_status_paused">Pauză</string>
+    <string name="timer_status_done">Gata!</string>
+    <string name="timer_seconds">%1$ds</string>
+    <string name="timer_start">Pornește</string>
+    <string name="timer_pause">Pauză</string>
+    <string name="timer_resume">Continuă</string>
+    <string name="timer_reset">Resetează timer-ul</string>
+    <string name="timer_shake_hint">Scutură telefonul pentru start / pauză</string>
+    <string name="timer_tip_title">Sfat pentru formă</string>
+    <string name="timer_tip_text">Umerii activi, abdomenul încordat. Oprește-te dacă simți durere ascuțită.</string>
+
+    <!-- Notifications -->
+    <string name="channel_records">Recorduri personale</string>
+    <string name="channel_records_desc">Te anunță când bați un record personal.</string>
+    <string name="channel_timer">Deadhang timer</string>
+    <string name="channel_timer_desc">Te anunță la finalul timer-ului.</string>
+    <string name="notification_record_title">🏆 Record personal nou!</string>
+    <string name="notification_record_line">%1$s: %2$s kg × %3$d</string>
+    <string name="notification_timer_title">Deadhang finalizat</string>
+    <string name="notification_timer_text">Ai ținut %1$d secunde. Priză excelentă!</string>
+
     <!-- Workout details -->
     <string name="detail_eyebrow">Antrenament</string>
     <string name="detail_volume">Volum total</string>

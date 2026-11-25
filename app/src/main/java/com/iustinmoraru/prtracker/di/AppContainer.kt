@@ -8,6 +8,7 @@ import com.iustinmoraru.prtracker.data.auth.AuthRepository
 import com.iustinmoraru.prtracker.data.settings.SettingsRepository
 import com.iustinmoraru.prtracker.data.workout.FirestoreWorkoutRepository
 import com.iustinmoraru.prtracker.data.workout.WorkoutRepository
+import com.iustinmoraru.prtracker.notifications.AppNotifier
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -24,6 +25,8 @@ class AppContainer(context: Context) {
     val applicationScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 
     val settingsRepository = SettingsRepository(context, applicationScope)
+
+    val notifier = AppNotifier(context.applicationContext, settingsRepository)
 
     /** False when the app was built without app/google-services.json (see README). */
     val isFirebaseConfigured: Boolean = FirebaseApp.getApps(context).isNotEmpty()

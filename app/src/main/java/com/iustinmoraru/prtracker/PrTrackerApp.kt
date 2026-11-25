@@ -15,6 +15,7 @@ class PrTrackerApp : Application() {
     override fun onCreate() {
         super.onCreate()
         container = AppContainer(this)
+        container.notifier.createChannels()
     }
 }
 

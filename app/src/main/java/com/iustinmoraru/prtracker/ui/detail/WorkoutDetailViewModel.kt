@@ -14,6 +14,7 @@ import com.iustinmoraru.prtracker.data.workout.Workout
 import com.iustinmoraru.prtracker.data.workout.WorkoutRepository
 import com.iustinmoraru.prtracker.data.workout.WorkoutStatus
 import com.iustinmoraru.prtracker.domain.stats.WorkoutStats
+import com.iustinmoraru.prtracker.notifications.RecordNotifier
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -43,6 +44,7 @@ data class DetailUiState(
 /** Shows one workout and lets the user complete, edit or delete it. */
 class WorkoutDetailViewModel(
     private val repository: WorkoutRepository,
+    private val notifier: RecordNotifier,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
@@ -90,6 +92,7 @@ class WorkoutDetailViewModel(
         viewModelScope.launch {
             repository.setStatus(workout.id, newStatus)
                 .onSuccess { result ->
+                    notifier.notifyNewRecords(newRecords)
                     val message = if (newRecords.isNotEmpty()) {
                         DetailMessage.NewRecords(newRecords)
                     } else {
@@ -116,7 +119,7 @@ class WorkoutDetailViewModel(
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
                 val app = this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY] as PrTrackerApp
-                WorkoutDetailViewModel(app.container.workoutRepository, createSavedStateHandle())
+                WorkoutDetailViewModel(app.container.workoutRepository, app.container.notifier, createSavedStateHandle())
             }
         }
     }
