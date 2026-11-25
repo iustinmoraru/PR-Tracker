@@ -31,6 +31,10 @@
             android:exported="false" />
 
         <activity
+            android:name=".ui.detail.WorkoutDetailActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".ui.editor.WorkoutEditorActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />

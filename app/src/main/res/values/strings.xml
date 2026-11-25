@@ -74,6 +74,21 @@
     <string name="toast_saved_offline">Salvat pe telefon. Se sincronizează când revii online.</string>
     <string name="toast_new_record">Felicitări! PR nou: %1$s 🏆</string>
 
+    <!-- Workout details -->
+    <string name="detail_eyebrow">Antrenament</string>
+    <string name="detail_volume">Volum total</string>
+    <string name="detail_notes">Notițe</string>
+    <string name="detail_mark_done">Marchează ca finalizat</string>
+    <string name="detail_mark_planned">Mută înapoi la planificate</string>
+    <string name="detail_marked_done">Antrenament finalizat. Bravo!</string>
+    <string name="detail_marked_planned">Antrenamentul este din nou planificat.</string>
+    <string name="detail_action_failed">Operația a eșuat. Verifică conexiunea și încearcă din nou.</string>
+    <string name="detail_delete_title">Ștergi antrenamentul?</string>
+    <string name="detail_delete_message">„%1$s” va fi șters definitiv, împreună cu exercițiile lui.</string>
+    <string name="toast_workout_deleted">Antrenament șters.</string>
+    <string name="badge_pr">PR</string>
+    <string name="cd_more_options">Mai multe opțiuni</string>
+
     <!-- Authentication -->
     <string name="auth_eyebrow_login">Bine ai revenit</string>
     <string name="auth_eyebrow_signup">Începe progresul</string>
