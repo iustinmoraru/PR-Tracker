@@ -16,6 +16,7 @@ import com.iustinmoraru.prtracker.ui.auth.LoginActivity
 import com.iustinmoraru.prtracker.ui.common.ThemedActivity
 import com.iustinmoraru.prtracker.ui.detail.WorkoutDetailActivity
 import com.iustinmoraru.prtracker.ui.editor.WorkoutEditorActivity
+import com.iustinmoraru.prtracker.ui.history.ExerciseHistoryActivity
 import com.iustinmoraru.prtracker.ui.settings.SettingsActivity
 import com.iustinmoraru.prtracker.ui.timer.TimerTab
 import com.iustinmoraru.prtracker.ui.timer.TimerViewModel
@@ -47,7 +48,7 @@ class MainActivity : ThemedActivity() {
             addWorkout = { startActivity(WorkoutEditorActivity.intent(this)) },
             openWorkout = { startActivity(WorkoutDetailActivity.intent(this, it.id)) },
             editWorkout = { startActivity(WorkoutEditorActivity.intent(this, it.id)) },
-            openRecord = { startActivity(WorkoutDetailActivity.intent(this, it.workoutId)) },
+            openRecord = { startActivity(ExerciseHistoryActivity.intent(this, it)) },
             openSettings = { startActivity(SettingsActivity.intent(this)) },
         )
 

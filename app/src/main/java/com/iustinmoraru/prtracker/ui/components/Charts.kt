@@ -126,3 +126,51 @@ fun BarChart(
         }
     }
 }
+
+/**
+ * Minimal line chart for the evolution of an exercise (weight per session).
+ * Points are spread evenly on X and scaled between the min and max value on Y.
+ */
+@Composable
+fun LineChart(
+    values: List<Float>,
+    modifier: Modifier = Modifier,
+    lineColor: Color = PrTheme.colors.accentText,
+    contentDescription: String,
+) {
+    val pointColor = PrTheme.colors.accent
+    val gridColor = PrTheme.colors.border
+    Canvas(
+        modifier = modifier
+            .fillMaxWidth()
+            .height(140.dp)
+            .semantics { this.contentDescription = contentDescription },
+    ) {
+        if (values.isEmpty()) return@Canvas
+        val min = values.min()
+        val max = values.max()
+        val range = (max - min).takeIf { it > 0f } ?: 1f
+        val padding = 8.dp.toPx()
+        val usableHeight = size.height - padding * 2
+        val stepX = if (values.size > 1) (size.width - padding * 2) / (values.size - 1) else 0f
+
+        // Three horizontal guide lines.
+        repeat(3) { i ->
+            val y = padding + usableHeight * i / 2f
+            drawLine(gridColor, Offset(0f, y), Offset(size.width, y), strokeWidth = 1.dp.toPx())
+        }
+
+        val points = values.mapIndexed { index, value ->
+            val x = if (values.size > 1) padding + stepX * index else size.width / 2
+            val y = padding + usableHeight * (1f - (value - min) / range)
+            Offset(x, y)
+        }
+        points.zipWithNext().forEach { (a, b) ->
+            drawLine(lineColor, a, b, strokeWidth = 3.dp.toPx(), cap = StrokeCap.Round)
+        }
+        points.forEach { point ->
+            drawCircle(pointColor, radius = 5.dp.toPx(), center = point)
+            drawCircle(lineColor, radius = 5.dp.toPx(), center = point, style = Stroke(2.dp.toPx()))
+        }
+    }
+}

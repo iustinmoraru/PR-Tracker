@@ -149,6 +149,15 @@
     <string name="timer_tip_title">Sfat pentru formă</string>
     <string name="timer_tip_text">Umerii activi, abdomenul încordat. Oprește-te dacă simți durere ascuțită.</string>
 
+    <!-- Exercise history -->
+    <string name="history_eyebrow">Istoric exercițiu</string>
+    <string name="history_record">Record personal</string>
+    <string name="history_chart_eyebrow">Evoluție</string>
+    <string name="history_chart_title">Greutate pe sesiune</string>
+    <string name="history_sessions">Sesiuni</string>
+    <string name="history_empty">Nu există încă sesiuni finalizate pentru acest exercițiu.</string>
+    <string name="cd_history_chart">Grafic cu evoluția greutății la %1$s</string>
+
     <!-- Notifications -->
     <string name="channel_records">Recorduri personale</string>
     <string name="channel_records_desc">Te anunță când bați un record personal.</string>
