@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Monday first, matching java.time.DayOfWeek ordering. -->
+    <string-array name="days_short">
+        <item>LUN</item>
+        <item>MAR</item>
+        <item>MIE</item>
+        <item>JOI</item>
+        <item>VIN</item>
+        <item>SÂM</item>
+        <item>DUM</item>
+    </string-array>
+    <string-array name="days_letter">
+        <item>L</item>
+        <item>M</item>
+        <item>M</item>
+        <item>J</item>
+        <item>V</item>
+        <item>S</item>
+        <item>D</item>
+    </string-array>
+    <string-array name="months_short">
+        <item>ian</item>
+        <item>feb</item>
+        <item>mar</item>
+        <item>apr</item>
+        <item>mai</item>
+        <item>iun</item>
+        <item>iul</item>
+        <item>aug</item>
+        <item>sep</item>
+        <item>oct</item>
+        <item>noi</item>
+        <item>dec</item>
+    </string-array>
+    <string-array name="months_full">
+        <item>ianuarie</item>
+        <item>februarie</item>
+        <item>martie</item>
+        <item>aprilie</item>
+        <item>mai</item>
+        <item>iunie</item>
+        <item>iulie</item>
+        <item>august</item>
+        <item>septembrie</item>
+        <item>octombrie</item>
+        <item>noiembrie</item>
+        <item>decembrie</item>
+    </string-array>
+</resources>

@@ -8,6 +8,71 @@
     <string name="cd_hide_password">Ascunde parola</string>
     <string name="cd_decrease">Scade %1$s</string>
     <string name="cd_increase">Crește %1$s</string>
+    <string name="action_save">Salvează</string>
+    <string name="action_close">Închide</string>
+    <string name="action_cancel">Anulează</string>
+    <string name="action_ok">OK</string>
+    <string name="action_discard">Renunță</string>
+    <string name="action_keep_editing">Continuă editarea</string>
+    <string name="action_delete">Șterge</string>
+    <string name="action_edit">Editează</string>
+
+    <!-- Workouts (shared) -->
+    <string name="duration_minutes">%1$d min</string>
+    <string name="weight_kg">%1$s kg</string>
+    <string name="exercise_sets_reps">%1$d seturi × %2$d repetări</string>
+    <string name="status_done">Făcut</string>
+    <string name="status_planned">Planificat</string>
+    <string name="category_strength">Forță</string>
+    <string name="category_grip">Priză</string>
+    <string name="category_mobility">Mobilitate</string>
+    <string name="category_cardio">Cardio</string>
+    <string name="cd_workout_options">Opțiuni antrenament</string>
+    <string name="cd_remove_exercise">Elimină %1$s</string>
+
+    <!-- Workout editor -->
+    <string name="editor_eyebrow">Planificare</string>
+    <string name="editor_title_new">Antrenament nou</string>
+    <string name="editor_title_edit">Editează antrenamentul</string>
+    <string name="editor_name_label">Numele antrenamentului</string>
+    <string name="editor_name_placeholder">ex. Upper body</string>
+    <string name="editor_date">Data</string>
+    <string name="editor_duration">Durată</string>
+    <string name="editor_completed">Antrenament finalizat</string>
+    <string name="editor_completed_desc">Doar antrenamentele finalizate contează la PR-uri</string>
+    <string name="editor_exercises">Exerciții</string>
+    <string name="editor_no_exercises">Niciunul adăugat</string>
+    <string name="editor_add_exercise">Adaugă exercițiu</string>
+    <string name="editor_notes">Notițe (opțional)</string>
+    <string name="editor_notes_placeholder">Cum te-ai simțit, ce vrei să îmbunătățești…</string>
+    <string name="editor_save">Salvează antrenamentul</string>
+    <string name="editor_saving">Se salvează…</string>
+    <string name="editor_save_failed">Nu am putut salva antrenamentul. Verifică conexiunea și încearcă din nou.</string>
+    <string name="editor_load_failed">Antrenamentul nu mai există sau nu a putut fi încărcat.</string>
+    <string name="editor_discard_title">Renunți la modificări?</string>
+    <string name="editor_discard_message">Modificările nesalvate se vor pierde.</string>
+
+    <string name="sheet_eyebrow">Bibliotecă</string>
+    <string name="sheet_title_add">Adaugă exercițiu</string>
+    <string name="sheet_title_edit">Editează exercițiul</string>
+    <string name="sheet_custom_name">Nume personalizat (opțional)</string>
+    <string name="sheet_sets">Seturi</string>
+    <string name="sheet_reps">Repetări</string>
+    <string name="sheet_weight">Greutate</string>
+    <string name="sheet_submit_add">Adaugă în antrenament</string>
+    <string name="sheet_submit_edit">Salvează exercițiul</string>
+
+    <string name="error_workout_name">Adaugă un nume pentru antrenament.</string>
+    <string name="error_workout_name_long">Numele poate avea cel mult 80 de caractere.</string>
+    <string name="error_no_exercises">Adaugă cel puțin un exercițiu.</string>
+    <string name="error_too_many_exercises">Un antrenament poate avea cel mult 20 de exerciții.</string>
+    <string name="error_duration">Durata trebuie să fie între 10 și 300 de minute.</string>
+    <string name="error_notes_long">Notițele pot avea cel mult 500 de caractere.</string>
+    <string name="error_exercise_name">Introdu un nume valid (minim 2 caractere).</string>
+
+    <string name="toast_workout_saved">Antrenament salvat.</string>
+    <string name="toast_saved_offline">Salvat pe telefon. Se sincronizează când revii online.</string>
+    <string name="toast_new_record">Felicitări! PR nou: %1$s 🏆</string>
 
     <!-- Authentication -->
     <string name="auth_eyebrow_login">Bine ai revenit</string>
@@ -58,4 +123,10 @@
     <string name="settings_notifications_desc">Te anunțăm la un PR nou sau la finalul timer-ului</string>
     <string name="settings_section_about">Despre</string>
     <string name="settings_version">Versiunea %1$s</string>
+
+    <plurals name="exercise_count">
+        <item quantity="one">%d exercițiu</item>
+        <item quantity="few">%d exerciții</item>
+        <item quantity="other">%d de exerciții</item>
+    </plurals>
 </resources>
