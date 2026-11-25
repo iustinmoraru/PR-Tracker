@@ -1,4 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">PR Tracker</string>
+
+    <!-- Common -->
+    <string name="action_back">Înapoi</string>
+    <string name="cd_show_password">Arată parola</string>
+    <string name="cd_hide_password">Ascunde parola</string>
+    <string name="cd_decrease">Scade %1$s</string>
+    <string name="cd_increase">Crește %1$s</string>
+
+    <!-- Settings -->
+    <string name="settings_eyebrow">Profil</string>
+    <string name="settings_title">Setări</string>
+    <string name="settings_section_appearance">Aspect</string>
+    <string name="theme_system">Tema dispozitivului</string>
+    <string name="theme_system_desc">Urmează setarea de sistem (implicit)</string>
+    <string name="theme_light">Luminoasă</string>
+    <string name="theme_light_desc">Fundal deschis, ideal ziua</string>
+    <string name="theme_dark">Întunecată</string>
+    <string name="theme_dark_desc">Fundal închis, ca în sală</string>
+    <string name="settings_section_notifications">Notificări</string>
+    <string name="settings_notifications_title">Notificări pentru recorduri</string>
+    <string name="settings_notifications_desc">Te anunțăm la un PR nou sau la finalul timer-ului</string>
+    <string name="settings_section_about">Despre</string>
+    <string name="settings_version">Versiunea %1$s</string>
 </resources>

@@ -1,8 +1,23 @@
 package com.iustinmoraru.prtracker
 
 import android.app.Application
+import android.content.Context
+import com.iustinmoraru.prtracker.di.AppContainer
 
 /**
- * Application entry point. Holds process-wide singletons that the activities share.
+ * Application entry point. Creates the [AppContainer] shared by all activities.
  */
-class PrTrackerApp : Application()
+class PrTrackerApp : Application() {
+
+    lateinit var container: AppContainer
+        private set
+
+    override fun onCreate() {
+        super.onCreate()
+        container = AppContainer(this)
+    }
+}
+
+/** Convenience accessor for the dependency container from any [Context]. */
+val Context.appContainer: AppContainer
+    get() = (applicationContext as PrTrackerApp).container
