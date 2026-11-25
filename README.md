@@ -75,10 +75,11 @@ Proiectul compilează și fără Firebase, dar autentificarea și sincronizarea 
 
 1. Intră pe [console.firebase.google.com](https://console.firebase.google.com) și creează un proiect.
 2. **Add app → Android**, cu package name `com.iustinmoraru.prtracker`.
-3. Adaugă amprenta **SHA-1** a cheii de debug (necesară pentru Google Sign-In). O afli din Android Studio cu
-   *Gradle → app → Tasks → android → signingReport*, sau din terminal:
-   ```
-   keytool -list -v -keystore "%USERPROFILE%\.android\debug.keystore" -alias androiddebugkey -storepass android -keypass android
+3. Adaugă amprenta **SHA-1** a cheii de debug (necesară pentru Google Sign-In). Cea mai simplă variantă: în Android Studio,
+   panoul *Gradle* (dreapta) → iconița de terminal (*Execute Gradle Task*) → scrie `signingReport` → Enter, și copiezi linia `SHA1`.
+   Din PowerShell, folosind `keytool` din JDK-ul inclus în Android Studio:
+   ```powershell
+   & "C:\Program Files\Android\Android Studio\jbr\bin\keytool.exe" -list -v -keystore "$env:USERPROFILE\.android\debug.keystore" -alias androiddebugkey -storepass android -keypass android
    ```
 4. Descarcă `google-services.json` și pune-l în folderul `app/`.
 5. **Authentication → Sign-in method**: activează **Google** și **Email/Password**.
