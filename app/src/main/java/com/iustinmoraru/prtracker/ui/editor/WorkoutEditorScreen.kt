@@ -128,120 +128,33 @@ fun WorkoutEditorScreen(
             },
         )
 
-        if (state.isLoading) {
-            Box(Modifier.fillMaxWidth().padding(top = 60.dp), contentAlignment = Alignment.Center) {
+        when {
+            state.isLoading -> Box(Modifier.fillMaxWidth().padding(top = 60.dp), contentAlignment = Alignment.Center) {
                 CircularProgressIndicator(color = colors.accentText)
             }
-            return@Column
-        }
-        if (state.loadFailed) {
-            Spacer(Modifier.height(20.dp))
-            ErrorMessage(stringResource(R.string.editor_load_failed))
-            return@Column
-        }
-
-        Spacer(Modifier.height(18.dp))
-        PrCard(modifier = Modifier.fillMaxWidth(), contentPadding = 18.dp, shape = RoundedCornerShape(22.dp)) {
-            Eyebrow(stringResource(R.string.editor_name_label))
-            BigTextField(
-                value = state.name,
-                onValueChange = onNameChange,
-                placeholder = stringResource(R.string.editor_name_placeholder),
-                isError = state.error == WorkoutError.NAME_REQUIRED || state.error == WorkoutError.NAME_TOO_LONG,
+            state.loadFailed -> {
+                Spacer(Modifier.height(20.dp))
+                ErrorMessage(stringResource(R.string.editor_load_failed))
+            }
+            else -> EditorForm(
+                state = state,
+                onNameChange = onNameChange,
+                onPickDate = { showDatePicker = true },
+                onDurationChange = onDurationChange,
+                onCompletedChange = onCompletedChange,
+                onNotesChange = onNotesChange,
+                onAddExercise = {
+                    editingExerciseId = null
+                    sheetOpen = true
+                },
+                onEditExercise = { id ->
+                    editingExerciseId = id
+                    sheetOpen = true
+                },
+                onExerciseRemoved = onExerciseRemoved,
+                onSave = onSave,
             )
-            Spacer(Modifier.height(16.dp))
-            Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                DateField(date = state.date, onClick = { showDatePicker = true }, modifier = Modifier.weight(1f))
-                Counter(
-                    label = stringResource(R.string.editor_duration),
-                    value = stringResource(R.string.duration_minutes, state.durationMinutes),
-                    icon = Icons.Rounded.Schedule,
-                    onDecrement = { onDurationChange(-5) },
-                    onIncrement = { onDurationChange(5) },
-                    modifier = Modifier.weight(1f),
-                )
-            }
-            Spacer(Modifier.height(14.dp))
-            HorizontalDivider(color = colors.border)
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 10.dp),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Column(Modifier.weight(1f)) {
-                    Text(stringResource(R.string.editor_completed), style = MaterialTheme.typography.titleSmall, color = colors.textPrimary)
-                    Text(stringResource(R.string.editor_completed_desc), style = MaterialTheme.typography.bodySmall, color = colors.textMuted)
-                }
-                Switch(
-                    checked = state.isCompleted,
-                    onCheckedChange = onCompletedChange,
-                    colors = SwitchDefaults.colors(checkedThumbColor = OnLime, checkedTrackColor = Lime),
-                )
-            }
         }
-
-        Spacer(Modifier.height(24.dp))
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Column(Modifier.weight(1f)) {
-                Eyebrow(stringResource(R.string.editor_exercises))
-                Text(
-                    text = if (state.exercises.isEmpty()) {
-                        stringResource(R.string.editor_no_exercises)
-                    } else {
-                        pluralStringResource(R.plurals.exercise_count, state.exercises.size, state.exercises.size)
-                    },
-                    style = MaterialTheme.typography.titleLarge,
-                    color = colors.textPrimary,
-                )
-            }
-            AddExerciseButton(onClick = {
-                editingExerciseId = null
-                sheetOpen = true
-            })
-        }
-
-        Spacer(Modifier.height(14.dp))
-        Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-            state.exercises.forEachIndexed { index, exercise ->
-                ExerciseRow(
-                    index = index,
-                    exercise = exercise,
-                    onClick = {
-                        editingExerciseId = exercise.id
-                        sheetOpen = true
-                    },
-                    onRemove = { onExerciseRemoved(exercise.id) },
-                )
-            }
-        }
-
-        Spacer(Modifier.height(20.dp))
-        AppTextField(
-            label = stringResource(R.string.editor_notes),
-            value = state.notes,
-            onValueChange = onNotesChange,
-            placeholder = stringResource(R.string.editor_notes_placeholder),
-            singleLine = false,
-        )
-
-        state.error?.let {
-            Spacer(Modifier.height(14.dp))
-            ErrorMessage(stringResource(it.messageRes()))
-        }
-        if (state.saveFailed) {
-            Spacer(Modifier.height(14.dp))
-            ErrorMessage(stringResource(R.string.editor_save_failed))
-        }
-
-        Spacer(Modifier.height(20.dp))
-        PrimaryButton(
-            text = stringResource(if (state.isSaving) R.string.editor_saving else R.string.editor_save),
-            onClick = onSave,
-            loading = state.isSaving,
-            trailingIcon = Icons.Rounded.Check,
-        )
-        Spacer(Modifier.height(24.dp))
     }
 
     if (sheetOpen) {
@@ -285,6 +198,119 @@ fun WorkoutEditorScreen(
             containerColor = colors.sheet,
         )
     }
+}
+
+/** The editable form, shown once the workout is loaded (or immediately for a new one). */
+@Composable
+private fun EditorForm(
+    state: EditorUiState,
+    onNameChange: (String) -> Unit,
+    onPickDate: () -> Unit,
+    onDurationChange: (Int) -> Unit,
+    onCompletedChange: (Boolean) -> Unit,
+    onNotesChange: (String) -> Unit,
+    onAddExercise: () -> Unit,
+    onEditExercise: (String) -> Unit,
+    onExerciseRemoved: (String) -> Unit,
+    onSave: () -> Unit,
+) {
+    val colors = PrTheme.colors
+    Spacer(Modifier.height(18.dp))
+    PrCard(modifier = Modifier.fillMaxWidth(), contentPadding = 18.dp, shape = RoundedCornerShape(22.dp)) {
+        Eyebrow(stringResource(R.string.editor_name_label))
+        BigTextField(
+            value = state.name,
+            onValueChange = onNameChange,
+            placeholder = stringResource(R.string.editor_name_placeholder),
+            isError = state.error == WorkoutError.NAME_REQUIRED || state.error == WorkoutError.NAME_TOO_LONG,
+        )
+        Spacer(Modifier.height(16.dp))
+        Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+            DateField(date = state.date, onClick = onPickDate, modifier = Modifier.weight(1f))
+            Counter(
+                label = stringResource(R.string.editor_duration),
+                value = stringResource(R.string.duration_minutes, state.durationMinutes),
+                icon = Icons.Rounded.Schedule,
+                onDecrement = { onDurationChange(-5) },
+                onIncrement = { onDurationChange(5) },
+                modifier = Modifier.weight(1f),
+            )
+        }
+        Spacer(Modifier.height(14.dp))
+        HorizontalDivider(color = colors.border)
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 10.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Column(Modifier.weight(1f)) {
+                Text(stringResource(R.string.editor_completed), style = MaterialTheme.typography.titleSmall, color = colors.textPrimary)
+                Text(stringResource(R.string.editor_completed_desc), style = MaterialTheme.typography.bodySmall, color = colors.textMuted)
+            }
+            Switch(
+                checked = state.isCompleted,
+                onCheckedChange = onCompletedChange,
+                colors = SwitchDefaults.colors(checkedThumbColor = OnLime, checkedTrackColor = Lime),
+            )
+        }
+    }
+
+    Spacer(Modifier.height(24.dp))
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        Column(Modifier.weight(1f)) {
+            Eyebrow(stringResource(R.string.editor_exercises))
+            Text(
+                text = if (state.exercises.isEmpty()) {
+                    stringResource(R.string.editor_no_exercises)
+                } else {
+                    pluralStringResource(R.plurals.exercise_count, state.exercises.size, state.exercises.size)
+                },
+                style = MaterialTheme.typography.titleLarge,
+                color = colors.textPrimary,
+            )
+        }
+        AddExerciseButton(onClick = onAddExercise)
+    }
+
+    Spacer(Modifier.height(14.dp))
+    Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+        state.exercises.forEachIndexed { index, exercise ->
+            ExerciseRow(
+                index = index,
+                exercise = exercise,
+                onClick = { onEditExercise(exercise.id) },
+                onRemove = { onExerciseRemoved(exercise.id) },
+            )
+        }
+    }
+
+    Spacer(Modifier.height(20.dp))
+    AppTextField(
+        label = stringResource(R.string.editor_notes),
+        value = state.notes,
+        onValueChange = onNotesChange,
+        placeholder = stringResource(R.string.editor_notes_placeholder),
+        singleLine = false,
+    )
+
+    state.error?.let {
+        Spacer(Modifier.height(14.dp))
+        ErrorMessage(stringResource(it.messageRes()))
+    }
+    if (state.saveFailed) {
+        Spacer(Modifier.height(14.dp))
+        ErrorMessage(stringResource(R.string.editor_save_failed))
+    }
+
+    Spacer(Modifier.height(20.dp))
+    PrimaryButton(
+        text = stringResource(if (state.isSaving) R.string.editor_saving else R.string.editor_save),
+        onClick = onSave,
+        loading = state.isSaving,
+        trailingIcon = Icons.Rounded.Check,
+    )
+    Spacer(Modifier.height(24.dp))
 }
 
 /** Large borderless input for the workout name, as in the design. */
