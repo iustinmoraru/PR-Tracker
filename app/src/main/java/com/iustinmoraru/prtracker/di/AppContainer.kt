@@ -1,6 +1,9 @@
 package com.iustinmoraru.prtracker.di
 
 import android.content.Context
+import com.google.firebase.FirebaseApp
+import com.google.firebase.auth.FirebaseAuth
+import com.iustinmoraru.prtracker.data.auth.AuthRepository
 import com.iustinmoraru.prtracker.data.settings.SettingsRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -18,4 +21,9 @@ class AppContainer(context: Context) {
     val applicationScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 
     val settingsRepository = SettingsRepository(context, applicationScope)
+
+    /** False when the app was built without app/google-services.json (see README). */
+    val isFirebaseConfigured: Boolean = FirebaseApp.getApps(context).isNotEmpty()
+
+    val authRepository = AuthRepository(if (isFirebaseConfigured) FirebaseAuth.getInstance() else null)
 }

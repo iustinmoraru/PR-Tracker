@@ -9,6 +9,40 @@
     <string name="cd_decrease">Scade %1$s</string>
     <string name="cd_increase">Crește %1$s</string>
 
+    <!-- Authentication -->
+    <string name="auth_eyebrow_login">Bine ai revenit</string>
+    <string name="auth_eyebrow_signup">Începe progresul</string>
+    <string name="auth_title_login">Intră în ritmul tău.</string>
+    <string name="auth_title_signup">Creează-ți contul.</string>
+    <string name="auth_subtitle">Antrenamente, progres și recorduri personale, păstrate în siguranță în cloud.</string>
+    <string name="auth_google">Continuă cu Google</string>
+    <string name="auth_or">sau cu email</string>
+    <string name="auth_name">Nume</string>
+    <string name="auth_email">Email</string>
+    <string name="auth_password">Parolă</string>
+    <string name="auth_password_hint">Minim 8 caractere, litere și cifre</string>
+    <string name="auth_submit_login">Autentifică-te</string>
+    <string name="auth_submit_signup">Creează cont</string>
+    <string name="auth_switch_to_signup">Nu ai cont? Creează unul</string>
+    <string name="auth_switch_to_login">Ai deja cont? Autentifică-te</string>
+
+    <string name="error_required">Câmpul este obligatoriu.</string>
+    <string name="error_invalid_email">Adresa de email nu este validă.</string>
+    <string name="error_password_short">Parola trebuie să aibă cel puțin 8 caractere.</string>
+    <string name="error_password_weak">Parola trebuie să conțină atât litere, cât și cifre.</string>
+    <string name="error_name_short">Numele trebuie să aibă cel puțin 2 caractere.</string>
+    <string name="error_name_long">Numele poate avea cel mult 40 de caractere.</string>
+
+    <string name="auth_error_not_configured">Firebase nu este configurat. Adaugă fișierul app/google-services.json (vezi README).</string>
+    <string name="auth_error_invalid_credentials">Email sau parolă greșită.</string>
+    <string name="auth_error_user_not_found">Nu există un cont cu acest email.</string>
+    <string name="auth_error_email_in_use">Există deja un cont cu acest email.</string>
+    <string name="auth_error_network">Nu există conexiune la internet. Încearcă din nou.</string>
+    <string name="auth_error_too_many">Prea multe încercări. Așteaptă puțin și reîncearcă.</string>
+    <string name="auth_error_google_no_account">Nu am găsit niciun cont Google pe dispozitiv. Adaugă unul din Setări.</string>
+    <string name="auth_error_google_failed">Autentificarea cu Google a eșuat. Încearcă din nou.</string>
+    <string name="auth_error_unknown">A apărut o eroare neașteptată. Încearcă din nou.</string>
+
     <!-- Settings -->
     <string name="settings_eyebrow">Profil</string>
     <string name="settings_title">Setări</string>
