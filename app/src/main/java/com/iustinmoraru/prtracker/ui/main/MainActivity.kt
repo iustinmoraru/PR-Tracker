@@ -3,39 +3,82 @@ package com.iustinmoraru.prtracker.ui.main
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
+import androidx.activity.viewModels
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.lifecycleScope
+import com.iustinmoraru.prtracker.ui.auth.GoogleSignInHelper
 import com.iustinmoraru.prtracker.ui.auth.LoginActivity
 import com.iustinmoraru.prtracker.ui.common.ThemedActivity
-import com.iustinmoraru.prtracker.ui.components.PrimaryButton
-import com.iustinmoraru.prtracker.ui.components.SecondaryButton
+import com.iustinmoraru.prtracker.ui.detail.WorkoutDetailActivity
+import com.iustinmoraru.prtracker.ui.editor.WorkoutEditorActivity
 import com.iustinmoraru.prtracker.ui.settings.SettingsActivity
 import com.iustinmoraru.prtracker.ui.theme.PrTheme
+import kotlinx.coroutines.launch
 
-/** Main screen of the app (placeholder until the workout features are implemented). */
+/**
+ * Main activity with the bottom navigation (Home, Progress, Timer, Profile).
+ * Other screens (editor, details, settings) are separate activities started from here.
+ */
 class MainActivity : ThemedActivity() {
+
+    private val viewModel: MainViewModel by viewModels { MainViewModel.Factory }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val user = container.authRepository.currentUser
-        if (user == null) {
-            startActivity(LoginActivity.intent(this))
+        if (container.authRepository.currentUser == null) {
+            openLogin()
             return
         }
+
+        val navigation = MainNavigation(
+            addWorkout = { startActivity(WorkoutEditorActivity.intent(this)) },
+            openWorkout = { startActivity(WorkoutDetailActivity.intent(this, it.id)) },
+            editWorkout = { startActivity(WorkoutEditorActivity.intent(this, it.id)) },
+            openRecord = { startActivity(WorkoutDetailActivity.intent(this, it.workoutId)) },
+            openSettings = { startActivity(SettingsActivity.intent(this)) },
+        )
+
         setThemedContent {
-            Column(Modifier.fillMaxSize().padding(24.dp), verticalArrangement = Arrangement.spacedBy(12.dp, androidx.compose.ui.Alignment.CenterVertically)) {
-                Text("Salut, ${user.firstName}!", color = PrTheme.colors.textPrimary)
-                PrimaryButton(text = "Setări", onClick = { startActivity(SettingsActivity.intent(this@MainActivity)) })
-                SecondaryButton(text = "Ieși din cont", onClick = {
-                    container.authRepository.signOut()
-                    startActivity(LoginActivity.intent(this@MainActivity))
-                })
+            val state by viewModel.uiState.collectAsStateWithLifecycle()
+
+            LaunchedEffect(state.signedOut) {
+                if (state.signedOut) openLogin()
             }
+
+            MainScreen(
+                state = state,
+                navigation = navigation,
+                onToggleStatus = viewModel::toggleStatus,
+                onDelete = viewModel::delete,
+                onSignOut = ::signOut,
+                onMessageShown = viewModel::onMessageShown,
+                timerContent = {
+                    Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                        Text("Deadhang timer", color = PrTheme.colors.textMuted)
+                    }
+                },
+            )
         }
+    }
+
+    /** Signs out of Firebase and forgets the Google account choice. */
+    private fun signOut() {
+        lifecycleScope.launch {
+            GoogleSignInHelper(this@MainActivity).clearCredentials()
+            viewModel.signOut()
+        }
+    }
+
+    private fun openLogin() {
+        startActivity(LoginActivity.intent(this))
+        finish()
     }
 
     companion object {

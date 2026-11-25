@@ -74,6 +74,64 @@
     <string name="toast_saved_offline">Salvat pe telefon. Se sincronizează când revii online.</string>
     <string name="toast_new_record">Felicitări! PR nou: %1$s 🏆</string>
 
+    <!-- Main screen -->
+    <string name="brand_title">PR TRACKER</string>
+    <string name="nav_home">Acasă</string>
+    <string name="nav_progress">Progres</string>
+    <string name="nav_timer">Deadhang</string>
+    <string name="nav_profile">Profil</string>
+    <string name="cd_open_menu">Deschide meniul</string>
+    <string name="cd_notifications">Notificări</string>
+    <string name="menu_add_workout">Adaugă antrenament</string>
+    <string name="menu_view">Vezi detalii</string>
+    <string name="menu_mark_done">Marchează finalizat</string>
+    <string name="menu_mark_planned">Marchează planificat</string>
+    <string name="main_next_workout">Următorul antrenament: %1$s</string>
+    <string name="main_no_notifications">Nu ai notificări noi.</string>
+    <string name="main_deleted">„%1$s” a fost șters.</string>
+    <string name="main_sign_out_title">Ieși din cont?</string>
+    <string name="main_sign_out_message">Datele tale rămân salvate în cloud și le regăsești la următoarea autentificare.</string>
+    <string name="main_about_text">Versiunea %1$s\n\nUrmărește-ți antrenamentele, recordurile personale și consistența la sală. Proiect pentru laboratorul de Calcul Mobil.</string>
+
+    <string name="home_default_name">atlet</string>
+    <string name="home_week">Săptămâna %1$s</string>
+    <string name="home_greeting">Salut, %1$s.</string>
+    <string name="home_tagline">Hai să progresăm.</string>
+    <string name="home_plan_eyebrow">Planul tău</string>
+    <string name="home_plan_title">Antrenamentele săptămânii</string>
+    <string name="home_add">Adaugă</string>
+    <string name="home_empty_title">Planul tău este liber</string>
+    <string name="home_empty_desc">Adaugă primul antrenament al săptămânii.</string>
+    <string name="home_load_failed">Nu am putut încărca antrenamentele. Verifică conexiunea.</string>
+    <string name="home_streak">serie activă</string>
+    <string name="home_monthly_volume">volum lunar</string>
+    <string name="home_history_eyebrow">Istoric</string>
+    <string name="home_history_title">Toate antrenamentele</string>
+
+    <string name="progress_eyebrow">Analiză personală</string>
+    <string name="progress_title">Progresul tău</string>
+    <string name="progress_total_volume">Volum total</string>
+    <string name="progress_vs_last_month">%1$d%% față de luna trecută</string>
+    <string name="progress_no_comparison">Fără date pentru luna trecută</string>
+    <string name="progress_weeks">săptămâni</string>
+    <string name="progress_completed">finalizate</string>
+    <string name="progress_minutes">minute</string>
+    <string name="progress_consistency">Consistență</string>
+    <string name="progress_last_7_days">Ultimele 7 zile</string>
+    <string name="progress_records_eyebrow">Recorduri personale</string>
+    <string name="progress_records_title">PR-urile tale</string>
+    <string name="progress_records_empty">Finalizează un antrenament ca să apară primele recorduri.</string>
+    <string name="record_weight_reps">%1$s kg × %2$d</string>
+    <string name="record_reps_only">%1$d rep.</string>
+    <string name="cd_chart_last_7_days">Grafic: %1$d minute de antrenament în ultimele 7 zile</string>
+
+    <string name="profile_google_account">Cont Google</string>
+    <string name="profile_email_account">Cont cu email și parolă</string>
+    <string name="profile_sign_out">Ieși din cont</string>
+    <string name="profile_settings_theme">Setări și temă</string>
+    <string name="profile_notifications">Notificări și remindere</string>
+    <string name="profile_about">Despre aplicație</string>
+
     <!-- Workout details -->
     <string name="detail_eyebrow">Antrenament</string>
     <string name="detail_volume">Volum total</string>
@@ -139,6 +197,11 @@
     <string name="settings_section_about">Despre</string>
     <string name="settings_version">Versiunea %1$s</string>
 
+    <plurals name="weeks_short">
+        <item quantity="one">%d săpt.</item>
+        <item quantity="few">%d săpt.</item>
+        <item quantity="other">%d săpt.</item>
+    </plurals>
     <plurals name="exercise_count">
         <item quantity="one">%d exercițiu</item>
         <item quantity="few">%d exerciții</item>
