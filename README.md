@@ -4,6 +4,30 @@ Aplicație Android pentru monitorizarea progresului la sală: planifici antrenam
 
 Proiect realizat pentru laboratorul de Calcul Mobil.
 
+## Funcționalități
+
+- **Autentificare** cu Google (Credential Manager) sau cu email și parolă, cu validarea datelor și mesaje de eroare clare.
+- **Acasă**: planul săptămânii, inel de progres, serie de săptămâni active, volum lunar, istoric complet.
+- **Antrenamente**: creare și editare (nume, dată, durată, notițe, exerciții cu seturi × repetări × greutate), detalii, marcare ca finalizat, ștergere.
+- **Recorduri personale (PR)**: calculate automat din antrenamentele finalizate, cu notificare la fiecare record nou și istoric pe exercițiu cu grafic.
+- **Progres**: volum total, minute, antrenamente finalizate, consistența din ultimele 7 zile.
+- **Deadhang timer**: cronometru pentru priză, pornit/oprit și prin **scuturarea telefonului** (accelerometru), cu vibrație și notificare la final.
+- **Temă**: implicit urmează tema dispozitivului; din *Profil → Setări* se poate alege Luminoasă sau Întunecată.
+- Funcționează și **offline** (cache Firestore), cu sincronizare automată.
+
+## Cum acoperă baremul
+
+| Criteriu | Implementare |
+|---|---|
+| Autentificare și validare | `LoginActivity`, `AuthRepository`, `AuthValidator` (+ teste unitare) |
+| Evenimente UI | click, long click (meniu contextual pe antrenamente), scuturare (senzor), switch-uri, date picker, notificări |
+| Minim două activități | `LoginActivity`, `MainActivity`, `WorkoutEditorActivity`, `WorkoutDetailActivity`, `ExerciseHistoryActivity`, `SettingsActivity` |
+| Meniu funcțional | meniul de opțiuni din header, meniul contextual (long press), meniul ⋮ din detalii, bara de navigare |
+| Stocare date | Cloud Firestore (cloud) + DataStore (local) |
+| Design și UX | design Figma, temă luminoasă/întunecată, stări de încărcare/gol/eroare, confirmări, snackbar-uri |
+| Cod curat și modularitate | MVVM, pachete `data` / `domain` / `ui`, repository-uri, KDoc |
+| Bonus | autentificare Google + senzor (accelerometru) |
+
 ## Tehnologii
 
 | Zonă | Tehnologie |
@@ -24,13 +48,23 @@ app/src/main/java/com/iustinmoraru/prtracker/
 ├── di/                      # AppContainer (dependency injection manual)
 ├── data/                    # surse de date: Firebase, DataStore
 │   ├── auth/                # AuthRepository, erori de autentificare
-│   └── settings/            # SettingsRepository, ThemeMode
-├── domain/                  # logică pură Kotlin (validări, calcule), testată unitar
+│   ├── settings/            # SettingsRepository, ThemeMode
+│   └── workout/             # modele + WorkoutRepository (Firestore)
+├── domain/                  # logică pură Kotlin, testată unitar
+│   ├── stats/               # PR-uri, serii, volum, istoric
+│   └── validation/          # validări pentru autentificare și antrenamente
+├── notifications/           # AppNotifier (canale + notificări)
+├── sensors/                 # ShakeDetector (accelerometru)
 └── ui/                      # activități, ecrane Compose, ViewModel-uri
     ├── auth/                # LoginActivity (Google + email/parolă)
-    ├── main/                # MainActivity
+    ├── main/                # MainActivity: Acasă, Progres, Profil
+    ├── timer/               # Deadhang timer
+    ├── editor/              # WorkoutEditorActivity + foaia de exerciții
+    ├── detail/              # WorkoutDetailActivity
+    ├── history/             # ExerciseHistoryActivity
     ├── settings/            # SettingsActivity (temă, notificări)
-    ├── common/              # ThemedActivity (aplică tema aleasă)
+    ├── workout/             # componente comune pentru antrenamente
+    ├── common/              # ThemedActivity, formatare
     ├── components/          # componente UI reutilizabile
     └── theme/               # culori, tipografie, tema luminoasă/întunecată
 ```
